@@ -1,44 +1,33 @@
 function ConvertHandler() {
   
   this.getNum = function(input) {
-    let result;
+    // Busca dónde empieza la unidad (la primera letra)
+    let result = input.split(/[a-zA-Z]+/)[0];
     
-    return result;
+    if (result === "") return 1; // Default a 1 si no hay número
+    
+    // Validar fracción: si tiene más de un "/" es inválido
+    if (result.split('/').length > 2) return 'invalid number';
+    
+    try {
+      // Evaluación simple de la expresión matemática (admite 1/2, 2.5, etc.)
+      let num = eval(result); 
+      return isNaN(num) ? 'invalid number' : num;
+    } catch (e) {
+      return 'invalid number';
+    }
   };
-  
+
   this.getUnit = function(input) {
-    let result;
+    let result = input.match(/[a-zA-Z]+/);
+    if (!result) return 'invalid unit';
     
-    return result;
+    const unit = result[0].toLowerCase();
+    const validUnits = ['gal', 'l', 'mi', 'km', 'lbs', 'kg'];
+    
+    if (!validUnits.includes(unit)) return 'invalid unit';
+    return unit === 'l' ? 'L' : unit; // Liter debe ser 'L'
   };
   
-  this.getReturnUnit = function(initUnit) {
-    let result;
-    
-    return result;
-  };
-
-  this.spellOutUnit = function(unit) {
-    let result;
-    
-    return result;
-  };
-  
-  this.convert = function(initNum, initUnit) {
-    const galToL = 3.78541;
-    const lbsToKg = 0.453592;
-    const miToKm = 1.60934;
-    let result;
-    
-    return result;
-  };
-  
-  this.getString = function(initNum, initUnit, returnNum, returnUnit) {
-    let result;
-    
-    return result;
-  };
-  
+  // ... sigue con el resto de métodos: getReturnUnit, spellOutUnit, convert
 }
-
-module.exports = ConvertHandler;
