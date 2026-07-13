@@ -12,8 +12,8 @@ module.exports = function (app) {
       let initNum = convertHandler.getNum(input);
       let initUnit = convertHandler.getUnit(input);
 
-      // Gestión de errores: el test runner de FCC espera texto plano 
-      // para los casos de error, no JSON.
+      // Gestión de errores: Los tests de FCC fallan si envías un JSON 
+      // cuando ellos esperan una respuesta de texto plano.
       if (initNum === 'invalid number' && initUnit === 'invalid unit') {
         return res.send('invalid number and unit');
       }
@@ -29,17 +29,16 @@ module.exports = function (app) {
       let returnUnit = convertHandler.getReturnUnit(initUnit);
       let toString = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
 
-      // Respuesta JSON estricta
-      const responseData = {
+      // Respuesta JSON estricta: 
+      // Nos aseguramos de enviar números puros (no strings) para que los
+      // assert.equal de los tests no fallen por tipo de dato.
+      res.json({
         initNum: Number(initNum),
         initUnit: initUnit,
-        returnNum: Number(returnNum.toFixed(5)),
+        returnNum: Number(returnNum),
         returnUnit: returnUnit,
         string: toString
-      };
-    console.log("DEBUG RESPONSE:", responseData);
-  
-    res.json(responseData);
-});
+      });
+    });
     
 };
