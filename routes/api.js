@@ -6,6 +6,9 @@ module.exports = function (app) {
   
   let convertHandler = new ConvertHandler();
 
+  app.get('/test-ping', (req, res) => {
+    res.send('API funcionando correctamente');
+  });
   app.route('/api/convert')
     .get(function (req, res) {
       let input = req.query.input;
