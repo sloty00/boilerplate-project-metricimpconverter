@@ -30,13 +30,16 @@ module.exports = function (app) {
       let toString = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
 
       // Respuesta JSON estricta
-      res.json({
+      const responseData = {
         initNum: Number(initNum),
         initUnit: initUnit,
-        returnNum: Number(returnNum),
+        returnNum: Number(returnNum.toFixed(5)),
         returnUnit: returnUnit,
         string: toString
-      });
-    });
+      };
+    console.log("DEBUG RESPONSE:", responseData);
+  
+    res.json(responseData);
+});
     
 };
