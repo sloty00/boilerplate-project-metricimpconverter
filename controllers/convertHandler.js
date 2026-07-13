@@ -4,7 +4,6 @@ function ConvertHandler() {
     let result = input.match(/[.\d\/]+/g) || ['1'];
     let numString = result[0];
     
-    // Verificar si hay más de una barra (fracción doble)
     let slashCount = (numString.match(/\//g) || []).length;
     if (slashCount > 1) return 'invalid number';
     
@@ -36,7 +35,8 @@ function ConvertHandler() {
       'mi': 'km', 'km': 'mi',
       'lbs': 'kg', 'kg': 'lbs'
     };
-    return units[initUnit.toLowerCase()];
+    let unit = initUnit.toLowerCase();
+    return units[unit] === 'l' ? 'L' : units[unit];
   };
 
   this.spellOutUnit = function(unit) {
@@ -71,6 +71,3 @@ function ConvertHandler() {
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
     return `${initNum} ${this.spellOutUnit(initUnit)} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;
   };
-}
-
-module.exports = ConvertHandler;
